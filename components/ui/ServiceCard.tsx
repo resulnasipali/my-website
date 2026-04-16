@@ -1,70 +1,39 @@
-"use client";
-
-import { motion } from "framer-motion";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, LucideIcon } from "lucide-react";
+import Image from 'next/image';
+import { ReactNode } from 'react';
 
 interface ServiceCardProps {
   title: string;
   description: string;
-  icon: LucideIcon;
-  href: string;
-  delay?: number;
+  icon?: ReactNode;
   image?: string;
 }
 
-export function ServiceCard({ title, description, icon: Icon, href, delay = 0, image }: ServiceCardProps) {
+export default function ServiceCard({ title, description, icon, image }: ServiceCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay }}
-      whileHover={{ y: -8 }}
-      className="h-full"
-    >
-      <Link href={href} className="group block h-full">
-        <div className="bg-white border border-gray-100 rounded-2xl h-full shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col relative overflow-hidden">
-          
-          {image && (
-            <div className="relative w-full h-56 overflow-hidden shrink-0">
-               <Image 
-                 src={image} 
-                 fill 
-                 alt={title} 
-                 className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
-                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-               />
-               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent" />
-               <div className="absolute bottom-4 left-6 w-12 h-12 rounded-xl bg-white text-primary flex items-center justify-center shadow-lg group-hover:bg-primary group-hover:text-white transition-colors duration-300 z-10">
-                  <Icon size={24} />
-               </div>
-            </div>
-          )}
-          
-          <div className="p-6 md:p-8 flex flex-col flex-1 relative bg-white">
-            {!image && (
-              <div className="w-14 h-14 rounded-xl bg-primary/5 text-primary flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-                <Icon size={28} />
-              </div>
-            )}
-            
-            <h3 className="text-xl font-serif font-bold text-text-main mb-3 group-hover:text-primary transition-colors mt-2">
-              {title}
-            </h3>
-            
-            <p className="text-gray-600 mb-6 line-clamp-3 flex-1">
-              {description}
-            </p>
-            
-            <div className="flex items-center text-accent font-medium mt-auto">
-              <span>İncele</span>
-              <ArrowRight size={16} className="ml-2 group-hover:translate-x-2 transition-transform duration-300" />
-            </div>
-          </div>
+    <div className="flex flex-col bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
+      {/* Görsel Alanı - Mobilde yüksekliği 48, masaüstünde 56 */}
+      {image && (
+        <div className="relative w-full h-48 sm:h-56">
+          <Image 
+            src={image} 
+            alt={title} 
+            fill 
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </div>
-      </Link>
-    </motion.div>
+      )}
+      
+      {/* Metin ve İkon Alanı */}
+      <div className="p-6 flex flex-col flex-grow">
+        <div className="flex items-center gap-3 mb-4">
+          {icon && <div className="text-blue-600 p-2 bg-blue-50 rounded-lg">{icon}</div>}
+          <h3 className="text-xl font-bold text-gray-900 leading-tight">{title}</h3>
+        </div>
+        <p className="text-gray-600 text-sm sm:text-base leading-relaxed flex-grow">
+          {description}
+        </p>
+      </div>
+    </div>
   );
 }

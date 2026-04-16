@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { Phone, Calendar, Stethoscope, HeartPulse, Activity, Eye, Smile, Sparkles, UserCheck } from "lucide-react";
-import { ServiceCard } from "@/components/ui/ServiceCard";
+import ServiceCard from "@/components/ui/ServiceCard";
 
 const services = [
   { 
@@ -140,10 +140,8 @@ export default function Home() {
                 key={idx}
                 title={service.title}
                 description={service.description}
-                icon={service.icon}
+                icon={<service.icon size={28} />}
                 image={service.image}
-                href={service.href}
-                delay={idx * 0.1}
               />
             ))}
           </div>
